@@ -1,0 +1,23 @@
+{
+  "name": "backend2-groupassignment-backend",
+  "version": "1.0.0",
+  "description": "``\r Emil \r Elin \r Vadzim\r ``\r This is the backend of our project",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EmilSunden/Backend2-GroupAssignment-Backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EmilSunden/Backend2-GroupAssignment-Backend/issues"
+  },
+  "homepage": "https://github.com/EmilSunden/Backend2-GroupAssignment-Backend#readme",
+  "dependencies": {
+    "jest": "^29.5.0"
+  }
+}
