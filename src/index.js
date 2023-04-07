@@ -9,7 +9,7 @@ require('dotenv').config();
 server.use(cors());
 server.use(express.json());
 
-//crashar pga tom authRouter
+//craches bc authRouter is emtpy
 server.use("/api/auth", authRouter);
 
 // Connect to MongoDB
