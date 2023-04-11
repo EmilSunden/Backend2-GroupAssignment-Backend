@@ -2,7 +2,7 @@ const express = require('express');
 const server = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
-const authRouter = require('./routes/authRoutes/authRoutes');
+// const authRouter = require('./routes/authRoutes/authRoutes');
 require('dotenv').config();
 
 
@@ -27,8 +27,6 @@ const connect = async () => {
 }
 
 connect()
-
-
 
 server.listen(5050)
 
