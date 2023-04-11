@@ -10,7 +10,7 @@ server.use(cors());
 server.use(express.json());
 
 //craches bc authRouter is emtpy
-server.use("/api/auth", authRouter);
+//server.use("/api/auth", authRouter);
 
 // Connect to MongoDB
 const database = process.env.MONGO_DB;
@@ -28,4 +28,8 @@ const connect = async () => {
 
 connect()
 
+
+
 server.listen(5050)
+
+module.exports = { connect, database };
