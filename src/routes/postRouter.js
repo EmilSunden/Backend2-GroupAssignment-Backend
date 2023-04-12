@@ -13,6 +13,8 @@ router.patch('/post/:id', authMiddleware, PostController.update);
 
 //To Rework
 router.post('/post/comments', authMiddleware, commentController.create);
+router.get("/post/comments/:id", authMiddleware, commentController.postComments);
+
 
 module.exports.postsRoutes = router;
 
