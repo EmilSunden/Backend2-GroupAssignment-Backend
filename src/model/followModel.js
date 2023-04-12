@@ -1,7 +1,16 @@
 const {Schema, model} = require('mongoose')
 
-const Follow = new Schema({
-    username:{ type: String, required: true, unique: true },
+const followersSchema = new Schema({
+    follower: {
+        type: ObjectId,
+        ref: 'User',
+        required: true
+    },
+    following: {
+        type: ObjectId,
+        ref: 'User',
+        required: true
+    }
 });
 
-module.exports = model('Follow', Follow)
+module.exports = model('Followers', followersSchema)
