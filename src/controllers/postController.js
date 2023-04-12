@@ -1,5 +1,6 @@
 const {PostService} = require("../services/PostService")
 const {postBodyValidation} = require("../validation/validationSchemas")
+const {isMongoId} = require("validator");
 
 module.exports.create = async (req, res) => {
 
@@ -27,3 +28,24 @@ module.exports.create = async (req, res) => {
         }
     }
 };
+
+module.exports.getOne = async (req, res) => {
+    try {
+        const postId = req.params.id;
+        if (isMongoId(postId)) {
+            const postGetOne = await PostService.findPost(postId)
+            if (postGetOne) {
+                res.send(postGetOne)
+            } else {
+                return res.status(500).json({message: `Sry, can't get post`});
+            }
+        } else {
+            res.status(404).json({message: 'id is not correct'})
+        }
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({message: `Can't get post`,});
+    }
+};
+

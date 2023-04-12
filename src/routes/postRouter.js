@@ -5,5 +5,9 @@ const router = new Router()
 
 
 router.post('/post', authMiddleware, PostController.create);
+router.get('/post/:id', authMiddleware, PostController.getOne);
+
+
 
 module.exports.postsRoutes = router;
+

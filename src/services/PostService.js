@@ -8,5 +8,9 @@ module.exports.PostService = {
     async save(post) {
         const createPostResult = await post.save()
         return createPostResult
+    },
+    async findPost(postId) {
+        const findPost = await Post.findOneAndUpdate({_id: postId,}, {$inc: {views: 1},}, {returnDocument: 'after',})
+        return findPost
     }
 }
