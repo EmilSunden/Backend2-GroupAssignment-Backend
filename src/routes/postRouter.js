@@ -6,6 +6,7 @@ const router = new Router()
 
 router.post('/post', authMiddleware, PostController.create);
 router.get('/post/:id', authMiddleware, PostController.getOne);
+router.delete('/post/:id/delete', authMiddleware, PostController.remove);
 
 
 
