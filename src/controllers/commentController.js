@@ -32,3 +32,21 @@ module.exports.create = async (req, res) => {
         }
     }
 };
+
+module.exports.postComments = async (req, res) => {
+    const id = req.params.id;
+    if (!validator.isMongoId(id)) {
+        res.status(400).json({error: 'id is not correct'});
+    } else {
+        try {
+            const result = await commentSchema.find({post: id}).populate({path: 'user', select: "-password"});
+            if (result) {
+                return res.status(200).json(result);
+            }
+            return res.status(404).json({error: 'Comment not found'});
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json({error: 'Internal server error'});
+        }
+    }
+};
