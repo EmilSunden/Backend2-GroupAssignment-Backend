@@ -49,3 +49,28 @@ module.exports.getOne = async (req, res) => {
     }
 };
 
+module.exports.remove = async (req, res) => {
+    try {
+        const postId = req.params.id;
+        if (isMongoId(postId)) {
+
+            const postRemove = await PostService.remove(postId)
+
+            if (postRemove) {
+                res.status(200).json({message: 'Deleted'})
+            } else if (postRemove === null) {
+                res.status(404).json({message: `Sry, post not found`})
+            } else {
+                res.status(500).json({message: 'Internal Server Error'})
+            }
+        } else {
+            return res.status(404).json({message: 'id is not correct'})
+        }
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({message: `Internal Server Error`});
+    }
+};
+
+
