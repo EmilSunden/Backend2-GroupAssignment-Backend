@@ -4,10 +4,6 @@ const User = require('../../model/userModel');
 
 exports.register = async function register (req, res) {
     try {
-        const errors = validationResult(req)
-        if (!errors.isEmpty()) {
-            return res.status(400).json({message: "Bad request", errors})
-        }
         const {username, password} = req.body
         const existUser = await User.findOne({username})
         if (existUser) {
