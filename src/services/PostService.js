@@ -17,4 +17,8 @@ module.exports.PostService = {
         const removePost = Post.findOneAndDelete({_id: postId,})
         return removePost
     },
+    async update(postId, post) {
+        const postUpdate = await Post.updateOne({_id: postId}, post, {new: true});
+        return postUpdate
+    }
 }
