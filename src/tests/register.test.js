@@ -26,6 +26,12 @@ describe("Testing server endpoint /register", () => {
        
     });
 
+    test("Should return 201 if user was created", async () => {
+
+        const response = await request(server).post('/api/auth/register').send({username: 'test', password: 'test'});
+
+        expect(response.status).toBe(201);
+    });
 
 });
 
