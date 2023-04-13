@@ -15,6 +15,11 @@ describe("Testing server endpoint /register", () => {
             });
     }); 
     
+    afterEach(async () => {
+        await mongoose.connection.close();
+    });
+
+
 
 
 });
