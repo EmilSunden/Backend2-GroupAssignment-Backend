@@ -33,6 +33,12 @@ describe("Testing server endpoint /register", () => {
         expect(response.status).toBe(201);
     });
 
+    test("Should return 400 if user already exsist", async () => {
+        const response = await request(server).post('/api/auth/register').send({username: 'test', password: 'test'});
+
+        expect(response.status).toBe(400);
+    });
+
 });
 
 
