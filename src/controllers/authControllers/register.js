@@ -20,4 +20,3 @@ exports.register = async function register (req, res) {
         res.status(500).send({message: "Server error"})
     }
 }
-}
