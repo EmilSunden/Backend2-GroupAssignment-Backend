@@ -19,7 +19,12 @@ describe("Testing server endpoint /register", () => {
         await mongoose.connection.close();
     });
 
+    test("Should return 500 if no data is entered", async () => {
+       const response = await request(server).post('/api/auth/register').send({});
 
+       expect(response.status).toBe(500);
+       
+    });
 
 
 });
