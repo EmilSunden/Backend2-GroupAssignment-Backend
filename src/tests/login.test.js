@@ -18,6 +18,12 @@ describe("Testing server endpoint /register", () => {
         await mongoose.connection.close();
     });
 
+    test("Should return 200 if login was successful", async () => {
 
-    
+        const response = await request(server).post('/api/auth/login').send({username: 'elin1', password: 'test'});
+
+        expect(response.status).toBe(200);
+    });
+
+
 });
