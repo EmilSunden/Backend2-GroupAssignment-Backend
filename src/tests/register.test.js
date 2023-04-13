@@ -42,5 +42,3 @@ describe("Testing server endpoint /register", () => {
 
 });
 
-});
-
