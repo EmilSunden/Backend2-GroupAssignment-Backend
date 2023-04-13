@@ -15,7 +15,7 @@ describe("Testing server endpoint /register", () => {
                 useNewUrlParser: true,
             });
     }); 
-    
+
     afterEach(async () => {
         await mongoose.connection.close();
     });
@@ -24,7 +24,7 @@ describe("Testing server endpoint /register", () => {
        const response = await request(server).post('/api/auth/register').send({});
 
        expect(response.status).toBe(500);
-       
+
     });
 
     test("Should return 201 if user was created", async () => {
@@ -42,4 +42,5 @@ describe("Testing server endpoint /register", () => {
 
 });
 
+});
 
