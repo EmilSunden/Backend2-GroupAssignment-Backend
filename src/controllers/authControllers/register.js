@@ -1,10 +1,8 @@
 const bcrypt = require('bcrypt');
-const User = require('../../models/User');
-const express = require('express');
-const server = express();
-// validation add later
+const User = require('../../model/userModel');
+//validation add later
 
-// register user endpoint
+
 exports.register = async function register (req, res) {
     try {
         const {username, password} = req.body
@@ -21,6 +19,5 @@ exports.register = async function register (req, res) {
         console.log(err)
         res.status(500).send({message: "Server error"})
     }
-
 }
-
+}
