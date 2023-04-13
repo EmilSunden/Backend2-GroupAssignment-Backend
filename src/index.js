@@ -2,17 +2,16 @@ const express = require('express');
 const server = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
-const {postsRoutes} = require("./routes/postRouter");
-const authRouter = require('./routes/authRoutes/authRoutes');
+const { postsRoutes } = require("./routes/postRouter");
+const { authRoutes } = require('./routes/authRoutes/authRoutes');
 require('dotenv').config();
 
 
 server.use(cors());
 server.use(express.json());
 
-//craches bc authRouter is emtpy
-//server.use("/api/auth", authRouter);
 server.use("/api/auth", postsRoutes)
+server.use("/api/auth", authRoutes)
 
 // Connect to MongoDB
 const database = process.env.MONGO_DB;
@@ -34,4 +33,4 @@ connect()
 
 server.listen(5050)
 
-module.exports = { connect, database };
+module.exports = { connect, database, server };
