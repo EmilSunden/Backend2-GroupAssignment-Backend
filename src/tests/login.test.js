@@ -32,5 +32,10 @@ describe("Testing server endpoint /register", () => {
         expect(response.status).toBe(400);
     });
 
+    test("Should return 404 if user not found", async () => {
+        const response = await request(server).post('/api/auth/login').send({username: 'kungen', password: '1234'});
+
+        expect(response.status).toBe(404);
+    });
 
 });
