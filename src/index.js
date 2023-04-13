@@ -31,4 +31,4 @@ connect()
 
 server.listen(5050)
 
-module.exports = { connect, database };
+module.exports = { connect, database, server };
