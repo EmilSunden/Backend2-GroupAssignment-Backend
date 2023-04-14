@@ -1,10 +1,13 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../../model/User');
+const Router = require("express")
+const router = new Router();
+const { authMiddleware } = require('../../middleware/authMiddleware');
 require('dotenv').config();
 // add valation later
 
-const secretKey = process.env.SECRET_KEY
+const secretKey = process.env.secret_key
 
 exports.login = async function login (req, res)  {
     try {
@@ -18,7 +21,7 @@ exports.login = async function login (req, res)  {
             return res.status(400).json({message:'Password is not correct'})
         }
 
-        const token = jwt.sign({id:user.id, username: user.username},secretKey, {expiresIn: "1h"})
+        const token = jwt.sign({id:user._id, username: user.username}, secretKey, {expiresIn: "1h"})
         return res.cookie("UserCookies", token, {
             maxAge: 1000 * 60 * 60, 
             path: "api/auth/login",
@@ -26,7 +29,7 @@ exports.login = async function login (req, res)  {
         })
             .status(200).json({
                 token, user: {
-                    status: "200", text: "You are logged in", id: user.id, username: user.username
+                    status: "200", text: "You are logged in", id: user._id, username: user.username
                 }
             })
     } catch (err) {
