@@ -3,16 +3,15 @@ const {postBodyValidation} = require("../validation/validationSchemas")
 const {isMongoId} = require("validator");
 
 module.exports.create = async (req, res) => {
-
-    const {title, text, description} = req.body;
+    const {title, text} = req.body;
     const bodyRequestData = {
-        title, text, description, user: req.user.id,
+        title, text, user: req.user.id,
     };
+    console.log(bodyRequestData)
 
     const validation = await postBodyValidation.validate(bodyRequestData);
     if (validation.error) {
         return res.status(400).json(validation.error.details[0].message);
-
     } else {
         const post = await PostService.create(validation.value)
         try {
