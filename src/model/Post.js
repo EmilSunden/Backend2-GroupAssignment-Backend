@@ -8,7 +8,6 @@ const postSchema = new Schema(
         text: {
             type: String, required: true,
         },
-        description: String,
         views: {
             type: Number, default: 0,
         },
