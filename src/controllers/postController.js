@@ -75,9 +75,9 @@ module.exports.remove = async (req, res) => {
 module.exports.update = async (req, res) => {
     try {
         const postId = req.params.id;
-        const {title, text, description} = req.body;
+        const {title, text} = req.body;
         const bodyRequestData = {
-            title, text, description, user: req.user.id,
+            title, text, user: req.user.id,
         };
 
         const validation = await postBodyValidation.validate(bodyRequestData);
