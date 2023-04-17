@@ -1,4 +1,4 @@
-const Post = require("../model/Post")
+const Post = require("../model/Post");
 
 module.exports.PostService = {
     async create(post) {
@@ -12,6 +12,10 @@ module.exports.PostService = {
     async findPost(postId) {
         const findPost = await Post.findOneAndUpdate({_id: postId,}, {$inc: {views: 1},}, {returnDocument: 'after',})
         return findPost
+    },
+    async findPosts(document) {
+        const findPosts = await Post.find(document);
+        return findPosts;
     },
     async remove(postId){
         const removePost = Post.findOneAndDelete({_id: postId,})
