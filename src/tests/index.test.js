@@ -1,4 +1,4 @@
-const { connect, database } = require('../index');
+const { connect, database } = require('../config/db');
 const mongoose = require('mongoose');
 
 jest.mock('mongoose');
