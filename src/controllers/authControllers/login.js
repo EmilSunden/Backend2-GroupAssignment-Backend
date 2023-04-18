@@ -4,6 +4,7 @@ const User = require('../../model/User');
 const Router = require("express")
 const router = new Router();
 const { authMiddleware } = require('../../middleware/authMiddleware');
+const {loginValidation} = require('../../validation/validationSchemas');
 require('dotenv').config();
 // add valation later
 
