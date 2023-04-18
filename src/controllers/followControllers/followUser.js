@@ -1,7 +1,8 @@
 const User = require('../../model/User');
 
 async function followUser(req, res) {
-  const { followerId, followingId } = req.body;
+  const followerId  = req.user.id
+  const { followingId } = req.body;
 
   try {
     const follower = await User.findById(followerId);
