@@ -1,7 +1,7 @@
 require('dotenv').config({ path: './src/.env' });
 const request = require('supertest');
 const { server } = require('../index');
-const { database } = require('../index');
+const { database } = require('../config/db');
 const mongoose = require('mongoose');
 
 describe("Testing server endpoint /register", () => {
