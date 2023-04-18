@@ -11,8 +11,13 @@ const registerValidation = Joi.object({
     password: Joi.string().required().min(6).max(25),
 });
 
+const loginValidation = Joi.object({ 
+    username: Joi.string().required().min(3).max(25),
+    password: Joi.string().required().min(3).max(25),
+});
 
 module.exports = {
     postBodyValidation,
-    registerValidation
+    registerValidation,
+    loginValidation
 }
