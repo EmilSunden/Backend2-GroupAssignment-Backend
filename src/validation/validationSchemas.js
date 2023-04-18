@@ -16,7 +16,15 @@ const loginValidation = Joi.object({
     password: Joi.string().required().min(3).max(25),
 });
 
+const commentBodyValidation = Joi.object({
+    text: Joi.string().required().min(3).max(50),
+    user: Joi.string().required().length(24),
+    post: Joi.string().required().length(24),
+});
+
+
 module.exports = {
+    commentBodyValidation,
     postBodyValidation,
     registerValidation,
     loginValidation
