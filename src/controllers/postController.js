@@ -92,7 +92,6 @@ module.exports.update = async (req, res) => {
         const bodyRequestData = {
             title, text, user: req.user.id,
         };
-
         const validation = await postBodyValidation.validate(bodyRequestData);
         if (validation.error) {
             return res.status(400).json(validation.error.details[0].message);
