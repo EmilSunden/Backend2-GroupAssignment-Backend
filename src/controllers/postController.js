@@ -1,6 +1,6 @@
 const {PostService} = require("../services/PostService")
 const {postBodyValidation} = require("../validation/validationSchemas")
-//const {isMongoId} = require("validator");
+const {isMongoId} = require("validator");
 
 module.exports.create = async (req, res) => {
     const {title, text} = req.body;
