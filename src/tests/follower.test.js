@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 dotenv.config()
 
-const MONGO_DB  = process.env.MONGO_DB;
+const MONGO_DB = process.env.MONGO_DB;
 
 describe('POST /api/follow', () => {
     let token;
