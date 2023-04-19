@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 
 const dotenv = require('dotenv');
 dotenv.config()
-const { MONGO_DB } = process.env;
+const MONGO_DB  = process.env.MONGO_DB;
 
 describe("Testing server endpoint /register", () => {
 
