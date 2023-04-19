@@ -1,9 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../../model/User');
-const Router = require("express")
-const router = new Router();
-const { authMiddleware } = require('../../middleware/authMiddleware');
 const {loginValidation} = require('../../validation/validationSchemas');
 require('dotenv').config();
 
@@ -40,6 +37,6 @@ exports.login = async function login (req, res)  {
         }
     } catch (err) {
         console.log(err)
-        res.satus(500).send({message: "Server error"})
+        res.status(500).send({message: "Server error"})
     }
 }
