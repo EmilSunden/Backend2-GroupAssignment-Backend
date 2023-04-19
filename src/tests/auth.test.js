@@ -7,13 +7,15 @@ dotenv.config();
 
 const MONGO_DB  = process.env.MONGO_DB;
 
+jest.mock('mongoose');
+
 describe('GET /api/auth/auth', () => {
   let token;
 
   beforeAll(async () => {
     await mongoose.connect(MONGO_DB);
     mongoose.set('strictQuery', false);
-    console.log(MONGO_DB)
+    
 
     // Login the user and get the token
     const response = await request(server)
