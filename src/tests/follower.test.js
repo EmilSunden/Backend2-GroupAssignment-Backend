@@ -1,10 +1,24 @@
 const request = require('supertest');
 const { server } = require('../index');
-const { database } = require('../config/db')
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+dotenv.config()
+
+const { MONGO_DB } = process.env;
 
 describe('POST /api/follow', () => {
     let token;
+
+    beforeEach(async () => {
+      await mongoose.connect(MONGO_DB, {
+        useUnifiedTopology: true,
+        useNewUrlParser: true
+      });
+    });
+
+    afterEach(async () => {
+      await mongoose.connection.close();
+    })
   
     beforeAll(async () => {
       // Login to get a valid token
