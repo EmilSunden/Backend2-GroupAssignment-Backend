@@ -13,8 +13,12 @@ module.exports.PostService = {
         const findPost = await Post.findOneAndUpdate({_id: postId,}, {$inc: {views: 1},}, {returnDocument: 'after',})
         return findPost
     },
-    async findPosts(document) {
-        const findPosts = await Post.find(document);
+    async findPosts(documents) {
+        const findPosts = await Post.find(documents);
+        return findPosts;
+    },
+    async findUserPosts(documents) {
+        const findPosts = await Post.find(documents);
         return findPosts;
     },
     async remove(postId){
