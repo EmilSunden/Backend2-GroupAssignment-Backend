@@ -16,7 +16,7 @@ async function followUser(req, res) {
       return res.status(400).json({ message: 'Following user not found' });
     }
 
-    if (follower.following.includes(following)) {
+    if (follower.following.some((f) => f._id.toString() === followingId)) {
       return res.status(400).json({ message: 'Already following this user' });
     }
 
