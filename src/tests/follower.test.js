@@ -6,6 +6,8 @@ dotenv.config()
 
 const MONGO_DB = process.env.MONGO_DB;
 
+jest.mock('mongoose');
+
 describe('POST /api/follow', () => {
     let token;
 
