@@ -3,7 +3,7 @@ const request = require('supertest');
 const { server } = require('../index');
 const mongoose = require('mongoose');
 
-const MONGO_DB  = process.env.MONGO_DB;
+const MONGO_DB = process.env.MONGO_DB;
 
 describe("Testing server endpoint /register", () => {
 
@@ -13,6 +13,7 @@ describe("Testing server endpoint /register", () => {
                 useUnifiedTopology: true,
                 useNewUrlParser: true,
             });
+
     }); 
 
     afterEach(async () => {
