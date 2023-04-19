@@ -1,4 +1,3 @@
-
 name: Run Jest tests
 
 on:
@@ -21,4 +20,4 @@ jobs:
         with:
           node-version: '18.x'
       - run: npm i
-      - run: npm test
+      - run: npm ghworkflowtest
