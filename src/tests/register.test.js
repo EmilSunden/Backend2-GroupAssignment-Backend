@@ -1,15 +1,16 @@
 require('dotenv').config({ path: './src/.env' });
 const request = require('supertest');
 const { server } = require('../index');
-const { database } = require('../config/db');
 const mongoose = require('mongoose');
+
+const { MONGO_DB } = process.env;
 
 const randomNum = Math.floor(Math.random() * 1000);
 
 describe("Testing server endpoint /register", () => {
 
     beforeEach(async () => {
-        await mongoose.connect(database,
+        await mongoose.connect(MONGO_DB,
             {
                 useUnifiedTopology: true,
                 useNewUrlParser: true,
@@ -20,10 +21,10 @@ describe("Testing server endpoint /register", () => {
         await mongoose.connection.close();
     });
 
-    test("Should return 500 if no data is entered", async () => {
+    test("Should return 400 if no data is entered", async () => {
        const response = await request(server).post('/api/auth/register').send({});
 
-       expect(response.status).toBe(500);
+       expect(response.status).toBe(400);
 
     });
 
