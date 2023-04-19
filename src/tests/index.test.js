@@ -10,6 +10,7 @@ jest.mock('mongoose');
 describe('Test MONGO_DB connection', () => {
   test('It should connect to the MONGO_DB', async () => {
     await connect(MONGO_DB);
+    mongoose.set('strictQuery', false);
     expect(mongoose.connect).toHaveBeenCalledWith(MONGO_DB);
   });
 });
