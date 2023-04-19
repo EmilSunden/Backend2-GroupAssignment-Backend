@@ -20,9 +20,7 @@ server.use("/api/auth", postsRoutes)
 server.use("/api/auth", authRoutes)
 server.use("/api/auth", followerRoutes)
 
-server.listen(PORT, () => {
-    console.log(`PORT RUNNING ON ${PORT}`)
-})
+server.listen(PORT)
 
 
 module.exports = { 
