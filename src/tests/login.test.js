@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 
 const MONGO_DB = process.env.MONGO_DB;
 
+jest.mock('mongoose');
+
 describe("Testing server endpoint /register", () => {
 
     beforeEach(async () => {
