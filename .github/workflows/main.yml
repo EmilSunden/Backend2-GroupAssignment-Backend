@@ -20,4 +20,4 @@ jobs:
         with:
           node-version: '18.x'
       - run: npm i
-      - run: npm workflowtest
+      - run: npm run workflowtest
