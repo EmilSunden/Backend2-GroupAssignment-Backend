@@ -3,7 +3,7 @@ const request = require('supertest');
 const { server } = require('../index');
 const mongoose = require('mongoose');
 
-const { MONGO_DB } = process.env;
+const MONGO_DB  = process.env.MONGO_DB;
 
 const randomNum = Math.floor(Math.random() * 1000);
 
