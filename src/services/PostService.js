@@ -17,10 +17,6 @@ module.exports.PostService = {
         const findPosts = await Post.find(documents);
         return findPosts;
     },
-    async findUserPosts(documents) {
-        const findPosts = await Post.find(documents);
-        return findPosts;
-    },
     async remove(postId){
         const removePost = Post.findOneAndDelete({_id: postId,})
         return removePost
