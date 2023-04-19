@@ -14,6 +14,7 @@ describe('POST /api/follow', () => {
         useUnifiedTopology: true,
         useNewUrlParser: true
       });
+      mongoose.set('strictQuery', false);
     });
 
     afterEach(async () => {
