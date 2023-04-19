@@ -12,7 +12,7 @@ describe('GET /api/auth/auth', () => {
 
   beforeAll(async () => {
     await mongoose.connect(MONGO_DB);
-    console.log('MongoDB connected');
+    console.log(MONGO_DB)
 
     // Login the user and get the token
     const response = await request(server)
