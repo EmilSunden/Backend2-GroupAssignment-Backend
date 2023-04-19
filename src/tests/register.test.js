@@ -15,6 +15,7 @@ describe("Testing server endpoint /register", () => {
                 useUnifiedTopology: true,
                 useNewUrlParser: true,
             });
+            mongoose.set('strictQuery', false);
     }); 
 
     afterEach(async () => {
