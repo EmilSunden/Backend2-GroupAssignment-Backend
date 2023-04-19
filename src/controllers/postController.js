@@ -47,7 +47,7 @@ module.exports.getUserPosts = async (req, res) => {
     try {
         const { userId } = req.params;
         console.log(userId)
-        const posts = await PostService.findUserPosts({ user: userId });
+        const posts = await PostService.findPosts({ user: userId });
         if (posts) {
             res.send(posts);
         } else {
