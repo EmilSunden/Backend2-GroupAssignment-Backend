@@ -16,6 +16,8 @@ router.patch('/post/:id', authMiddleware, PostController.update);
 router.post('/post/comments', authMiddleware, commentController.create);
 router.get("/post/comments/:id", authMiddleware, commentController.postComments);
 router.patch("/post/comments/:id", authMiddleware, commentController.update);
+router.delete("/post/comments/:id", authMiddleware, commentController.delete
+);
 
 
 module.exports.postsRoutes = router;
