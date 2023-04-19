@@ -40,6 +40,6 @@ exports.login = async function login (req, res)  {
         }
     } catch (err) {
         console.log(err)
-        res.satus(500).send({message: "Server error"})
+        res.status(500).send({message: "Server error"})
     }
 }
