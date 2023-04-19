@@ -5,7 +5,7 @@ const { postsRoutes } = require("./routes/postRouter");
 const { authRoutes } = require('./routes/authRoutes/authRoutes');
 const { followerRoutes } = require('./routes/followRoutes/followRoutes')
 require('dotenv').config();
-
+const PORT = process.env.PORT
 const { connect } = require('./config/db')
 // Connect to MongoDB
 connect()
@@ -20,7 +20,10 @@ server.use("/api/auth", postsRoutes)
 server.use("/api/auth", authRoutes)
 server.use("/api/auth", followerRoutes)
 
-server.listen(5050)
+server.listen(PORT, () => {
+    console.log(`PORT RUNNING ON ${PORT}`)
+})
+
 
 module.exports = { 
     server 
