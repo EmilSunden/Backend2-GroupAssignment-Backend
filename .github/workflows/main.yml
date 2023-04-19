@@ -14,7 +14,7 @@ jobs:
     runs-on: macos-latest 
     env: 
       MONGO_DB: ${{ secrets.MONGO_DB }}
-      secret_key: ${{ secrets.secret_key}}
+      secret_key: ${{ secrets.secret_key }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
