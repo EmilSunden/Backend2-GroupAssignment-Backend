@@ -7,6 +7,8 @@ const MONGO_DB  = process.env.MONGO_DB;
 
 const randomNum = Math.floor(Math.random() * 1000);
 
+jest.mock('mongoose');
+
 describe("Testing server endpoint /register", () => {
 
     beforeEach(async () => {
