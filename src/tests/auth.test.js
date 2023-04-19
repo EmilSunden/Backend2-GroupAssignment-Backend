@@ -1,13 +1,16 @@
 const request = require('supertest');
 const { server } = require('../index');
-const { database } = require('../config/db')
 const mongoose = require('mongoose');
+
+const dotenv = require('dotenv');
+dotenv.config()
+const { MONGO_DB } = process.env;
 
 describe('GET /api/auth/auth', () => {
   let token;
 
   beforeAll(async () => {
-    await mongoose.connect(database);
+    await mongoose.connect(MONGO_DB);
     console.log('MongoDB connected');
 
     // Login the user and get the token
