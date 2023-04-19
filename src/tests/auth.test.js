@@ -3,7 +3,8 @@ const { server } = require('../index');
 const mongoose = require('mongoose');
 
 const dotenv = require('dotenv');
-dotenv.config()
+dotenv.config();
+
 const MONGO_DB  = process.env.MONGO_DB;
 
 describe('GET /api/auth/auth', () => {
