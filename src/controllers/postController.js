@@ -29,7 +29,7 @@ module.exports.create = async (req, res) => {
     }
 };
 
-module.exports.getAll = async (req, res) => {
+module.exports.getAllUsersPosts = async (req, res) => {
     try {
         const posts = await PostService.findPosts({});
         if (posts) {
@@ -42,6 +42,23 @@ module.exports.getAll = async (req, res) => {
         res.status(500).json({message: `Can't get post`});
     }
 };
+
+module.exports.getUserPosts = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        console.log(userId)
+        const posts = await PostService.findUserPosts({ user: userId });
+        if (posts) {
+            res.send(posts);
+        } else {
+            res.status(404).json({message: "No posts found"});
+        }
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({message: `Can't get posts for that user`});
+    }
+}
 
 module.exports.getOne = async (req, res) => {
     try {
