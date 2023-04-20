@@ -12,14 +12,14 @@ on:
 
 jobs:
   jestTest:
-    env: 
-      MONGO_DB: ${{ secrets.MONGO_DB }}
-      secret_key: ${{ secrets.SECRET_KEY }}
     runs-on: macos-latest 
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: '18.x'
+        env:
+          MONGO_DB: ${{ secrets.MONGO_DB }}
+          secret_key: ${{ secrets.SECRET_KEY }}
       - run: npm i
       - run: npm test
