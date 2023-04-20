@@ -1,43 +1,42 @@
 require('dotenv').config({ path: './src/.env' });
 const request = require('supertest');
 const { server } = require('../index');
-const { database } = require('../config/db');
 const mongoose = require('mongoose');
+const User = require('../model/User');
 
-const randomNum = Math.floor(Math.random() * 1000);
+const MONGO_DB  = process.env.MONGO_DB;
+
+const user = { 
+    username: 'testuser5',
+    password: 'testpassword'
+}
+
+beforeAll(async () => {
+    await mongoose.connect(MONGO_DB,
+        {
+            useUnifiedTopology: true,
+            useNewUrlParser: true,
+        });
+}); 
+
+afterAll(async () => {
+    await User.deleteMany({username: user.username})
+    await mongoose.disconnect();
+});
 
 describe("Testing server endpoint /register", () => {
-
-    beforeEach(async () => {
-        await mongoose.connect(database,
-            {
-                useUnifiedTopology: true,
-                useNewUrlParser: true,
-            });
-    }); 
-
-    afterEach(async () => {
-        await mongoose.connection.close();
-    });
-
-    test("Should return 500 if no data is entered", async () => {
+    test("Should return 400 if no data is entered", async () => {
        const response = await request(server).post('/api/auth/register').send({});
-
-       expect(response.status).toBe(500);
-
+       expect(response.status).toBe(400);
     });
 
     test("Should return 201 if user was created", async () => {
-
-        const response = await request(server).post('/api/auth/register').send({username: `UserNr${randomNum}`, password: 'test'});
-
+        const response = await request(server).post('/api/auth/register').send(user);
         expect(response.status).toBe(201);
     });
-
-    test("Should return 400 if user already exsist", async () => {
-        const response = await request(server).post('/api/auth/register').send({username: `UserNr${randomNum}`, password: 'test'});
-
-        expect(response.status).toBe(400);
+    test("Should return 409 if user already exsist", async () => {
+        const response = await request(server).post('/api/auth/register').send(user);
+        expect(response.status).toBe(409);
     });
 
 });

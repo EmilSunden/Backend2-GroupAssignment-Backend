@@ -9,15 +9,15 @@ async function followUser(req, res) {
     const following = await User.findById(followingId);
 
     if (!follower) {
-      return res.status(400).json({ message: 'Follower not found' });
+      return res.status(404).json({ message: 'Follower not found' });
     }
 
     if (!following) {
-      return res.status(400).json({ message: 'Following user not found' });
+      return res.status(404).json({ message: 'Following user not found' });
     }
 
     if (follower.following.some((f) => f._id.toString() === followingId)) {
-      return res.status(400).json({ message: 'Already following this user' });
+      return res.status(409).json({ message: 'Already following this user' });
     }
 
     follower.following.push(following);

@@ -4,7 +4,7 @@
   "description": "``\r Emil \r Elin \r Vadzim\r ``\r This is the backend of our project",
   "main": "index.js",
   "scripts": {
-    "test": "jest --forceExit --detectOpenHandles  --watchAll --maxWorkers=1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
