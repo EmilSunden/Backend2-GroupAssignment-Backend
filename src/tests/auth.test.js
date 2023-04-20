@@ -1,52 +1,49 @@
-const request = require('supertest');
-const { server } = require('../index');
-const mongoose = require('mongoose');
+const request = require("supertest");
+const { server } = require("../index");
+const mongoose = require("mongoose");
 
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
+const User = require("../model/User");
 dotenv.config();
 
-const MONGO_DB  = process.env.MONGO_DB;
+const MONGO_DB = process.env.MONGO_DB;
 
-jest.mock('mongoose');
+const user = {
+  username: "testuser",
+  password: "testpassword",
+};
 
-describe('GET /api/auth/auth', () => {
-  let token;
+beforeAll(async () => {
+  await mongoose.connect(MONGO_DB);
+});
 
-  beforeAll(async () => {
-    await mongoose.connect(MONGO_DB);
-    mongoose.set('strictQuery', false);
-    
+afterAll(async () => {
+  await User.deleteMany({ username: user.username });
+  await mongoose.disconnect();
+});
 
-    // Login the user and get the token
+describe("GET /api/auth/auth", () => {
+  test("Should return 201 if user was created", async () => {
     const response = await request(server)
-      .post('/api/auth/login')
-      .send({
-        username: 'trollet2',
-        password: 'trollet2',
-      });
-
-    token = response.body.token;
+      .post("/api/auth/register")
+      .send(user);
+    expect(response.status).toBe(201);
   });
 
-  afterAll(async () => {
-    await mongoose.disconnect();
-  });
+  it("should respond with a cookie and a token", async () => {
+    const authToken = await request(server).post("/api/auth/login").send(user);
+    const { token } = authToken.body;
 
-  it('should respond with a cookie and a token', async () => {
     const response = await request(server)
-      .get('/api/auth/auth')
-      .set('Authorization', `Bearer ${token}`);
-
+      .get("/api/auth/auth")
+      .set("Authorization", `Bearer ${token}`);
     expect(response.status).toBe(200);
     expect(response.body.token).toBeDefined();
-    expect(response.header['set-cookie']).toBeDefined();
+    expect(response.header["set-cookie"]).toBeDefined();
   });
 
-  it('should respond with an error if token is not provided', async () => {
-    const response = await request(server)
-      .get('/api/auth/auth');
-
+  it("should respond with an error if token is not provided", async () => {
+    const response = await request(server).get("/api/auth/auth");
     expect(response.status).toBe(401);
   });
 });
-

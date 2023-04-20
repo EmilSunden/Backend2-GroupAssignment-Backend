@@ -2,45 +2,49 @@ require('dotenv').config({ path: './src/.env' });
 const request = require('supertest');
 const { server } = require('../index');
 const mongoose = require('mongoose');
+const User = require('../model/User');
 
 const MONGO_DB = process.env.MONGO_DB;
 
-jest.mock('mongoose');
+const user = { 
+    username: 'testuser',
+    password: 'testpassword'
+}
 
-describe("Testing server endpoint /register", () => {
+beforeAll(async () => {
+    await mongoose.connect(MONGO_DB,
+        {
+            useUnifiedTopology: true,
+            useNewUrlParser: true,
+        });
+}); 
 
-    beforeEach(async () => {
-        await mongoose.connect(MONGO_DB,
-            {
-                useUnifiedTopology: true,
-                useNewUrlParser: true,
-            });
-            mongoose.set('strictQuery', false);
+afterAll(async () => {
+    await User.deleteMany({username: user.username})
+    await mongoose.disconnect();
+});
 
-    }); 
+describe("Testing server endpoint /login", () => {
+    it("Should return 201 if user was created", async () => {
+        const response = await request(server)
+          .post("/api/auth/register")
+          .send(user);
+        expect(response.status).toBe(201);
+      });
 
-    afterEach(async () => {
-        await mongoose.connection.close();
-    });
-
-    test("Should return 200 if login was successful", async () => {
-
-        const response = await request(server).post('/api/auth/login').send({username: 'elin1', password: 'test'});
-
+    it("Should return 200 if login was successful", async () => {
+        const response = await request(server).post('/api/auth/login').send(user);
         expect(response.status).toBe(200);
     });
 
 
-    test("Should return 400 if password is wrong", async () => {
-        const response = await request(server).post('/api/auth/login').send({username: 'elin1', password: 'test123'});
-
+    it("Should return 400 if password is wrong", async () => {
+        const response = await request(server).post('/api/auth/login').send({username: 'trollet2', password: 'test123'});
         expect(response.status).toBe(400);
     });
 
-    test("Should return 404 if user not found", async () => {
+    it("Should return 404 if user not found", async () => {
         const response = await request(server).post('/api/auth/login').send({username: 'kungen', password: '1234'});
-
         expect(response.status).toBe(404);
     });
-
 });
