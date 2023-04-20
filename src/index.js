@@ -20,7 +20,7 @@ server.use("/api/auth", postsRoutes)
 server.use("/api/auth", authRoutes)
 server.use("/api/auth", followerRoutes)
 
-server.listen(PORT)
+// server.listen(PORT)
 
 
 module.exports = { 
