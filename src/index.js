@@ -9,7 +9,7 @@ const PORT = process.env.PORT
 const { connect } = require('./config/db');
 const authMiddleware = require('./middleware/authMiddleware');
 // Connect to MongoDB
-// connect()
+connect()
 
 server.use(cors({
     origin: true,
@@ -21,7 +21,7 @@ server.use("/api/auth", authRoutes)
 server.use("/api/", authMiddleware, postsRoutes)
 server.use("/api/", authMiddleware, followerRoutes)
 
-// server.listen(PORT)
+server.listen(PORT)
 
 module.exports = { 
     server 
