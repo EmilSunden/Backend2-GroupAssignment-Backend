@@ -39,7 +39,7 @@ describe("Testing server endpoint /login", () => {
 
 
     it("Should return 400 if password is wrong", async () => {
-        const response = await request(server).post('/api/auth/login').send({username: 'trollet2', password: 'test123'});
+        const response = await request(server).post('/api/auth/login').send({username: user.username, password: 'password'});
         expect(response.status).toBe(400);
     });
 
