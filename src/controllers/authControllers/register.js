@@ -19,10 +19,10 @@ exports.register = async function register (req, res) {
             const user = new User({username, password: hashedPassword})
 
             await user.save()
-            return res.status(201).json({message: "User was created."})
+            return res.status(201).json({message: "User was created.", insertedId: user._id.toString()})
         }
     } catch (error) {
-        console.log(error)
+        console.log(error.message)
         res.status(500).send({message: "Server error"})
     }
 }
