@@ -7,7 +7,7 @@ const User = require('../model/User');
 const MONGO_DB  = process.env.MONGO_DB;
 
 const user = { 
-    username: 'testuser',
+    username: 'testuser5',
     password: 'testpassword'
 }
 
@@ -34,7 +34,6 @@ describe("Testing server endpoint /register", () => {
         const response = await request(server).post('/api/auth/register').send(user);
         expect(response.status).toBe(201);
     });
-
     test("Should return 409 if user already exsist", async () => {
         const response = await request(server).post('/api/auth/register').send(user);
         expect(response.status).toBe(409);
