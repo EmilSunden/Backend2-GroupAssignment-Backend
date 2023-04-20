@@ -7,9 +7,10 @@ const { MONGO_DB } = process.env;
 const connect = async () => { 
     try { 
         await mongoose.connect(MONGO_DB);
-        mongoose.set('strictQuery', false);
+        console.log('Connected successfully')
+        
     } catch (err) { 
-        console.log(err)
+        console.log(err.message)
     }
 }
 
