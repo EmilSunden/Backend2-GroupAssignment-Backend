@@ -7,7 +7,7 @@ const User = require('../model/User');
 const MONGO_DB = process.env.MONGO_DB;
 
 const user = { 
-    username: 'testuser',
+    username: 'testuser4',
     password: 'testpassword'
 }
 
@@ -39,7 +39,7 @@ describe("Testing server endpoint /login", () => {
 
 
     it("Should return 400 if password is wrong", async () => {
-        const response = await request(server).post('/api/auth/login').send({username: user.username, password: 'password'});
+        const response = await request(server).post('/api/auth/login').send({username: user.username, password: 'wrong'});
         expect(response.status).toBe(400);
     });
 
