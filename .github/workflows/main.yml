@@ -11,6 +11,9 @@ on:
 
 jobs:
   jestTest:
+    env: 
+      MONGO_DB: ${{ secrets.MONGO_DB }}
+      secret_key: ${{ secrets.secret_key }}
     runs-on: macos-latest 
     steps:
       - uses: actions/checkout@v3
