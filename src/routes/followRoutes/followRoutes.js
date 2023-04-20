@@ -5,8 +5,8 @@ const authMiddleware = require("../../middleware/authMiddleware");
 const { getUserFollowers } = require('../../controllers/followControllers/getUserFollowers');
 const { followUser } = require('../../controllers/followControllers/followUser');
 
-followerRoutes.post('/follow', authMiddleware, followUser);
-followerRoutes.get('/:userId/followers', authMiddleware, getUserFollowers);
+followerRoutes.post('/follow', followUser);
+followerRoutes.get('/followers/:userId', getUserFollowers);
 
 module.exports = {
     followerRoutes
