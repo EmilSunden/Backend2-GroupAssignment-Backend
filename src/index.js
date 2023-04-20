@@ -8,7 +8,7 @@ require('dotenv').config();
 const PORT = process.env.PORT
 const { connect } = require('./config/db')
 // Connect to MongoDB
-connect()
+// connect()
 
 server.use(cors({
     origin: true,
