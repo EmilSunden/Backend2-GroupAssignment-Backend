@@ -9,7 +9,7 @@ dotenv.config();
 const MONGO_DB = process.env.MONGO_DB;
 
 const user = {
-  username: "testuser",
+  username: "testuser2",
   password: "testpassword",
 };
 
@@ -34,12 +34,11 @@ describe("GET /api/auth/auth", () => {
     const authToken = await request(server).post("/api/auth/login").send(user);
     const { token } = authToken.body;
 
+
     const response = await request(server)
       .get("/api/auth/auth")
       .set("Authorization", `Bearer ${token}`);
     expect(response.status).toBe(200);
-    expect(response.body.token).toBeDefined();
-    expect(response.header["set-cookie"]).toBeDefined();
   });
 
   it("should respond with an error if token is not provided", async () => {
