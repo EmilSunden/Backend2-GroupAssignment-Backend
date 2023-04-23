@@ -15,10 +15,17 @@ const postSchema = new Schema(
       default: 0,
     },
     user: {
-      type: ObjectId,
-      ref: "User",
-      required: true,
+      id: {
+        type: ObjectId,
+        ref: "User",
+        required: true
+      },
+      username: {
+        type: String,
+        required: true
+      }
     },
+    
   },
   { timestamps: true }
 );
