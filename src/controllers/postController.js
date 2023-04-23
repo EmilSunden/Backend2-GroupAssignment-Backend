@@ -3,16 +3,13 @@ const User = require("../model/User");
 const {PostService} = require("../services/PostService");
 const {postBodyValidation} = require("../validation/validationSchemas");
 const {isMongoId} = require("validator");
-const Post = require('../model/Post')
-
 
 module.exports.create = async (req, res) => {
     const {title, text} = req.body;
     const bodyRequestData = {
         title,
         text,
-        user: req.user.id,
-           
+        user: req.user.id,      
     };
 
 
@@ -67,6 +64,8 @@ module.exports.getUserPosts = async (req, res) => {
             } else {
                 res.status(404).json({ message: 'No posts found'})
             }
+        } else {
+            res.status(404).json({ message: 'User not found' })
         }
     } catch (err) {
         console.log(err);
