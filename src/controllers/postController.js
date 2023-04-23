@@ -1,3 +1,4 @@
+const Post = require("../model/Post");
 const User = require("../model/User");
 const {PostService} = require("../services/PostService");
 const {postBodyValidation} = require("../validation/validationSchemas");
@@ -8,13 +9,10 @@ module.exports.create = async (req, res) => {
     const bodyRequestData = {
         title,
         text,
-        user: {
-            id: req.user.id,
-            username: req.user.username
-        }
+        user: req.user.id,
+           
     };
 
-    console.log(bodyRequestData)
 
     const validation = await postBodyValidation.validate(bodyRequestData);
     if (validation.error) {
@@ -37,7 +35,7 @@ module.exports.create = async (req, res) => {
 
 module.exports.getAllUsersPosts = async (req, res) => {
     try {
-        const posts = await PostService.findPosts({});
+        const posts = await Post.find({}).populate({path: 'user', select: "-password"});
         if (posts) {
             res.send(posts);
         } else {
@@ -50,15 +48,24 @@ module.exports.getAllUsersPosts = async (req, res) => {
 };
 
 module.exports.getUserPosts = async (req, res) => {
-    try {
+    try {    
         const { username } = req.params
-        const posts = await PostService.findProfilePosts(username);
-        if (posts) {
-            res.send(posts);
-        } else {
-            res.status(404).json({message: "No posts found"});
+        const user = await User.find({username})
+        
+        if (user) {
+            const posts = await Post.find({user})
+                .populate({
+                    path: "user",
+                    select: "username",
+            })
+        
+            if (posts) {
+                console.log(`Found ${posts.length} posts by user ${username}.`);
+                res.send(posts)
+            } else {
+                res.status(404).json({ message: 'No posts found'})
+            }
         }
-
     } catch (err) {
         console.log(err);
         res.status(500).json({message: `Can't get posts for that user`});
@@ -114,10 +121,8 @@ module.exports.update = async (req, res) => {
         const bodyRequestData = {
             title,
             text,
-            user: {
-                id: req.user.id,
-                username: req.user.username
-            }
+            user: req.user.id,
+                
         };
         const validation = await postBodyValidation.validate(bodyRequestData);
         if (validation.error) {
