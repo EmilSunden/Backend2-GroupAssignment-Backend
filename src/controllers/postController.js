@@ -1,6 +1,8 @@
 const {PostService} = require("../services/PostService");
 const {postBodyValidation} = require("../validation/validationSchemas");
 const {isMongoId} = require("validator");
+const Post = require('../model/Post')
+
 
 module.exports.create = async (req, res) => {
     const {title, text} = req.body;
@@ -31,7 +33,7 @@ module.exports.create = async (req, res) => {
 
 module.exports.getAllUsersPosts = async (req, res) => {
     try {
-        const posts = await PostService.findPosts({});
+        const posts = await Post.find({}).populate({path: 'user', select: "-password"});
         if (posts) {
             res.send(posts);
         } else {
