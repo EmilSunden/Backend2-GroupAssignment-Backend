@@ -3,10 +3,7 @@ const Joi = require("joi");
 const postBodyValidation = Joi.object({
     title: Joi.string().required().min(3).max(50),
     text: Joi.string().required().min(3).max(50),
-    user: Joi.object({
-        id: Joi.string().required().length(24),
-        username: Joi.string().required()
-    }).required()
+    user: Joi.string().length(24).required()
 });
 
 const registerValidation = Joi.object({
