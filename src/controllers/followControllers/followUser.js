@@ -5,10 +5,10 @@ async function followUser(req, res) {
   const { followingId } = req.body;
 
   try {
-    const follower = await User.findById(followerId);
+    const followers = await User.findById(followerId);
     const following = await User.findById(followingId);
 
-    if (!follower) {
+    if (!followers) {
       return res.status(404).json({ message: 'Follower not found' });
     }
 
@@ -16,14 +16,15 @@ async function followUser(req, res) {
       return res.status(404).json({ message: 'Following user not found' });
     }
 
-    if (follower.following.some((f) => f._id.toString() === followingId)) {
+
+    if (followers.following.some((f) => f._id.toString() === followingId)) {
       return res.status(409).json({ message: 'Already following this user' });
     }
 
-    follower.following.push(following);
-    following.follower.push(follower);
+    followers.following.push({ user: followingId, username: following.username });
+    following.followers.push({ user: followerId, username: followers.username });
 
-    await follower.save();
+    await followers.save();
     await following.save();
 
     res.status(200).json({ message: 'User followed successfully' });
