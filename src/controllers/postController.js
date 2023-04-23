@@ -1,3 +1,5 @@
+const Post = require("../model/Post");
+const User = require("../model/User");
 const {PostService} = require("../services/PostService");
 const {postBodyValidation} = require("../validation/validationSchemas");
 const {isMongoId} = require("validator");
@@ -10,7 +12,9 @@ module.exports.create = async (req, res) => {
         title,
         text,
         user: req.user.id,
+           
     };
+
 
     const validation = await postBodyValidation.validate(bodyRequestData);
     if (validation.error) {
@@ -46,16 +50,24 @@ module.exports.getAllUsersPosts = async (req, res) => {
 };
 
 module.exports.getUserPosts = async (req, res) => {
-    try {
-        const { userId } = req.params;
-        console.log(userId)
-        const posts = await PostService.findPosts({ user: userId });
-        if (posts) {
-            res.send(posts);
-        } else {
-            res.status(404).json({message: "No posts found"});
+    try {    
+        const { username } = req.params
+        const user = await User.find({username})
+        
+        if (user) {
+            const posts = await Post.find({user})
+                .populate({
+                    path: "user",
+                    select: "username",
+            })
+        
+            if (posts) {
+                console.log(`Found ${posts.length} posts by user ${username}.`);
+                res.send(posts)
+            } else {
+                res.status(404).json({ message: 'No posts found'})
+            }
         }
-
     } catch (err) {
         console.log(err);
         res.status(500).json({message: `Can't get posts for that user`});
@@ -109,7 +121,10 @@ module.exports.update = async (req, res) => {
         const postId = req.params.id;
         const {title, text} = req.body;
         const bodyRequestData = {
-            title, text, user: req.user.id,
+            title,
+            text,
+            user: req.user.id,
+                
         };
         const validation = await postBodyValidation.validate(bodyRequestData);
         if (validation.error) {

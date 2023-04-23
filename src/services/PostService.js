@@ -13,6 +13,12 @@ module.exports.PostService = {
         const findPost = await Post.findOneAndUpdate({_id: postId,}, {$inc: {views: 1},}, {returnDocument: 'after',}).populate({path: 'user', select: "-password"});
         return findPost
     },
+
+    async findPosts(documents) {
+        const findPosts = await Post.find(documents);
+        findPosts;
+    },
+    
     async remove(postId){
         const removePost = Post.findOneAndDelete({_id: postId,})
         return removePost
