@@ -15,8 +15,19 @@ module.exports.PostService = {
     },
     async findPosts(documents) {
         const findPosts = await Post.find(documents);
+        findPosts;
+    },
+    async findProfilePosts(username) {
+        console.log(`Searching for posts by user ${username}...`);
+        const findPosts = await Post.find({ 'user.username': username})
+        .populate({
+            path: "user",
+            select: "username",
+        })
+        console.log(`Found ${findPosts.length} posts by user ${username}.`);
         return findPosts;
     },
+    
     async remove(postId){
         const removePost = Post.findOneAndDelete({_id: postId,})
         return removePost
