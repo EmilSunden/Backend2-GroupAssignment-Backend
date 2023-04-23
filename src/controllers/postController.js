@@ -3,7 +3,6 @@ const User = require("../model/User");
 const {PostService} = require("../services/PostService");
 const {postBodyValidation} = require("../validation/validationSchemas");
 const {isMongoId} = require("validator");
-const Post = require('../model/Post')
 
 
 module.exports.create = async (req, res) => {
