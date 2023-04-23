@@ -8,8 +8,8 @@ router.post('/posts', PostController.create);
 router.get('/posts', PostController.getAllUsersPosts );
 router.get('/posts/user/:username', PostController.getUserPosts)
 router.get('/posts/:id', PostController.getOne);
-router.delete('/post/:id/delete', PostController.remove);
-router.patch('/post/:id', PostController.update);
+router.delete('/posts/:id/delete', PostController.remove);
+router.patch('/posts/:id/edit', PostController.update);
 
 
 //To Rework
