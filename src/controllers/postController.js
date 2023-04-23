@@ -1,3 +1,4 @@
+const User = require("../model/User");
 const {PostService} = require("../services/PostService");
 const {postBodyValidation} = require("../validation/validationSchemas");
 const {isMongoId} = require("validator");
@@ -7,8 +8,13 @@ module.exports.create = async (req, res) => {
     const bodyRequestData = {
         title,
         text,
-        user: req.user.id,
+        user: {
+            id: req.user.id,
+            username: req.user.username
+        }
     };
+
+    console.log(bodyRequestData)
 
     const validation = await postBodyValidation.validate(bodyRequestData);
     if (validation.error) {
@@ -45,9 +51,8 @@ module.exports.getAllUsersPosts = async (req, res) => {
 
 module.exports.getUserPosts = async (req, res) => {
     try {
-        const { userId } = req.params;
-        console.log(userId)
-        const posts = await PostService.findPosts({ user: userId });
+        const { username } = req.params
+        const posts = await PostService.findProfilePosts(username);
         if (posts) {
             res.send(posts);
         } else {
@@ -107,7 +112,12 @@ module.exports.update = async (req, res) => {
         const postId = req.params.id;
         const {title, text} = req.body;
         const bodyRequestData = {
-            title, text, user: req.user.id,
+            title,
+            text,
+            user: {
+                id: req.user.id,
+                username: req.user.username
+            }
         };
         const validation = await postBodyValidation.validate(bodyRequestData);
         if (validation.error) {
