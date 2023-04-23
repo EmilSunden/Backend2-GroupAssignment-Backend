@@ -15,15 +15,9 @@ const postSchema = new Schema(
       default: 0,
     },
     user: {
-      id: {
         type: ObjectId,
         ref: "User",
         required: true
-      },
-      username: {
-        type: String,
-        required: true
-      }
     },
     
   },
