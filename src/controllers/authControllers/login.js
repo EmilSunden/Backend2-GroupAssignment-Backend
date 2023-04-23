@@ -24,8 +24,8 @@ exports.login = async function login (req, res)  {
             }
 
             const token = jwt.sign({id:user._id, username: user.username}, secretKey, {expiresIn: "1h"})
-            return res.cookie("UserCookies", token, {
-                maxAge: 1000 * 60 * 60, 
+            return res.cookie("token", token, {
+                maxAge: 30 * 24 * 60 * 60 * 1000,
                 path: "api/auth/login",
                 httpOnly: true
             })
