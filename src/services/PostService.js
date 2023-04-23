@@ -18,13 +18,11 @@ module.exports.PostService = {
         findPosts;
     },
     async findProfilePosts(username) {
-        console.log(`Searching for posts by user ${username}...`);
-        const findPosts = await Post.find({ 'user.username': username})
-        .populate({
-            path: "user",
-            select: "username",
-        })
-        console.log(`Found ${findPosts.length} posts by user ${username}.`);
+        const findPosts = await Post.find({username})
+            .populate({
+                path: 'user',
+                select: 'username'
+            })
         return findPosts;
     },
     
