@@ -42,7 +42,7 @@ describe("POST /api/follow/:id", () => {
 
     const token = loginResponse.body.token;
     const response = await request(server)
-      .post("/api/follow")
+      .post("/api/follow/:id")
       .set("Authorization", `Bearer ${token}`)
       .send({
         followingId: id,
