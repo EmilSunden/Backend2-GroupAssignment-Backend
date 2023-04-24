@@ -1,37 +1,46 @@
-const User = require('../../model/User');
+const User = require("../../model/User");
 
 async function followUser(req, res) {
-  const followerId  = req.user.id
+  const followerId = req.user.id;
   const { id } = req.params;
 
   try {
-    const followers = await User.findById(followerId);
-    const following = await User.findById(id);
+    const { following } = await User.findById(followerId)
+      .populate("following")
+      .exec();
 
-    if (!followers) {
-      return res.status(404).json({ message: 'Follower not found' });
+    const alreadyFollowing = following.some((f) => f.user.toString() === id);
+    if (alreadyFollowing) {
+      return res.status(409).json({ message: "Already following this user" });
     }
 
-    if (!following) {
-      return res.status(404).json({ message: 'Following user not found' });
+    const followingUser = await User.findById(id);
+    if (!followingUser) {
+      return res.status(404).json({ message: "Following user not found" });
     }
 
-    if (followers.following.some((f) => f.user.toString() === id)) {
-      return res.status(409).json({ message: 'Already following this user' });
-    }
+    await User.updateOne(
+      { _id: followerId },
+      {
+        $addToSet: {
+          following: { user: id, username: followingUser.username },
+        },
+      }
+    );
+    await User.updateOne(
+      { _id: id },
+      {
+        $addToSet: {
+          followers: { user: followerId, username: req.user.username },
+        },
+      }
+    );
 
-    followers.following.push({ user: id, username: following.username });
-    following.followers.push({ user: followerId, username: followers.username });
-
-    await followers.save();
-    await following.save();
-
-    res.status(200).json({ message: 'User followed successfully' });
+    res.status(200).json({ message: "User followed successfully" });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: 'Error following user' });
+    res.status(500).json({ message: "Error following user" });
   }
 }
 
 module.exports = { followUser };
-
