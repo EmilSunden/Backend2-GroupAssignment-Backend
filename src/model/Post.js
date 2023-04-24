@@ -17,7 +17,7 @@ const postSchema = new Schema(
     user: {
         type: ObjectId,
         ref: "User",
-        required: true
+        required: true,
     },
     
   },
