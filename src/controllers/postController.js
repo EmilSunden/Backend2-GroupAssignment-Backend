@@ -75,20 +75,24 @@ module.exports.getUserPosts = async (req, res) => {
 
 module.exports.getFollowingPosts = async (req, res) => {
     try {
-      const { id } = req.params;
-      const following = await Promise.all(
-        (await User.find({ _id: id })).map(async (f) => {
-          return await Promise.all(
-            f.following.map(async (element) => {
-              const { ObjectId } = require("mongodb");
-              const userId = element.user;
-              const myObjectId = new ObjectId(userId);
-              const myObjectIdString = myObjectId.toString();
+      const { username } = req.params;
   
-              const foundFollower = await Post.find({ user: myObjectIdString });
-              return foundFollower;
-            })
-          );
+      // Find the user based on their username
+      const user = await User.findOne({ username });
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+  
+      const following = await Promise.all(
+        user.following.map(async (element) => {
+          const { ObjectId } = require("mongodb");
+          const userId = element.user;
+          const myObjectId = new ObjectId(userId);
+          const myObjectIdString = myObjectId.toString();
+  
+          const foundFollower = await Post.find({ user: myObjectIdString })
+            .populate("user", "username");
+          return foundFollower;
         })
       );
   
