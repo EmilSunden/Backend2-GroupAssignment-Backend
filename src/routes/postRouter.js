@@ -4,7 +4,7 @@ const commentController = require('../controllers/commentController');
 const router = new Router()
 
 
-router.post('/posts', PostController.create);
+router.post('/posts/create', PostController.create);
 router.get('/posts', PostController.getAllUsersPosts );
 router.get('/posts/user/:username', PostController.getUserPosts)
 router.get('/posts/:id', PostController.getOne);
@@ -13,10 +13,10 @@ router.patch('/posts/:id/edit', PostController.update);
 
 
 //To Rework
-router.post('/post/comments', commentController.create);
+router.post('/post/comments/create', commentController.create);
 router.get("/post/comments/:id", commentController.postComments);
-router.patch("/post/comments/:id", commentController.update);
-router.delete("/post/comments/:id", commentController.delete
+router.patch("/post/comments/:id/edit", commentController.update);
+router.delete("/post/comments/:id/delete", commentController.delete
 );
 
 
