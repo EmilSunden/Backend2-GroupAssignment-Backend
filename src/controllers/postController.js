@@ -3,6 +3,7 @@ const User = require("../model/User");
 const { PostService } = require("../services/PostService");
 const { postBodyValidation } = require("../validation/validationSchemas");
 const { isMongoId } = require("validator");
+const mongoose = require('mongoose')
 
 module.exports.create = async (req, res) => {
   const { title, text } = req.body;
@@ -72,24 +73,32 @@ module.exports.getUserPosts = async (req, res) => {
   }
 };
 
-module.exports.getFollowersPosts = async (req, res) => {
-  try {
-    const { id } = req.params;
-    console.log(id);
-    const result = await Post.find({ _id: id }).populate({
-      path: "user",
-      select: "followers",
-    });
-    if (result) {
-      res.status(200).json({ result });
-    } else {
-      res.status(404).json({ message: "No posts found" });
+module.exports.getFollowingPosts = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const following = await Promise.all(
+        (await User.find({ _id: id })).map(async (f) => {
+          return await Promise.all(
+            f.following.map(async (element) => {
+              const { ObjectId } = require("mongodb");
+              const userId = element.user;
+              const myObjectId = new ObjectId(userId);
+              const myObjectIdString = myObjectId.toString();
+  
+              const foundFollower = await Post.find({ user: myObjectIdString });
+              return foundFollower;
+            })
+          );
+        })
+      );
+  
+      res.send({ following: following });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ message: `Can't get posts for that user` });
     }
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: `Can't get posts for that user` });
-  }
-};
+  };
+  
 
 module.exports.getOne = async (req, res) => {
   try {
