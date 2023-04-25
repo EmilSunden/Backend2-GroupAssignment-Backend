@@ -28,9 +28,9 @@ afterAll(async () => {
   await mongoose.disconnect();
 });
 
-describe("POST /api/follow", () => {
+describe("POST /api/follow/:id", () => {
   it("should require authentication", async () => {
-    const response = await request(server).post("/api/follow").send();
+    const response = await request(server).post(`/api/follow/${id}`).send();
 
     expect(response.status).toBe(401);
   });
@@ -42,11 +42,9 @@ describe("POST /api/follow", () => {
 
     const token = loginResponse.body.token;
     const response = await request(server)
-      .post("/api/follow")
+      .post(`/api/follow/${id}`)
       .set("Authorization", `Bearer ${token}`)
-      .send({
-        followingId: id,
-      });
+      .send();
 
     expect(response.status).toBe(200);
   });
