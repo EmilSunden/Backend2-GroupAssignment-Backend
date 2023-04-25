@@ -90,7 +90,7 @@ module.exports.getFollowingPosts = async (req, res) => {
           const myObjectIdString = myObjectId.toString();
   
           const foundFollower = await Post.find({ user: myObjectIdString })
-            .populate("user", "id");
+            .populate("user", "username");
           return foundFollower;
         })
       );
