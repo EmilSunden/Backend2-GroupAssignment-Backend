@@ -6,7 +6,7 @@ const router = new Router()
 
 router.post('/posts/create', PostController.create);
 router.get('/posts', PostController.getAllUsersPosts );
-router.get('/posts/user/:username', PostController.getUserPosts)
+router.get('/posts/user/:username', PostController.getProfilePosts)
 router.get('/posts/:id', PostController.getOne);
 router.delete('/posts/:id/delete', PostController.remove);
 router.patch('/posts/:id/edit', PostController.update);
