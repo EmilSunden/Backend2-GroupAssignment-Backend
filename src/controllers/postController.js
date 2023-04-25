@@ -49,19 +49,19 @@ module.exports.getAllUsersPosts = async (req, res) => {
   }
 };
 
-module.exports.getUserPosts = async (req, res) => {
+module.exports.getProfilePosts = async (req, res) => {
   try {
-    const { id } = req.params;
-    const user = await User.find({ id });
+    const { username } = req.params;
+    const user = await User.findOne({ username });
 
     if (user) {
       const posts = await Post.find({ user }).populate({
         path: "user",
-        select: "id",
+        select: "username",
       });
 
       if (posts) {
-        console.log(`Found ${posts.length} posts by user ${id}.`);
+        console.log(`Found ${posts.length} posts by user ${username}.`);
         res.send(posts);
       } else {
         res.status(404).json({ message: "No posts found" });
