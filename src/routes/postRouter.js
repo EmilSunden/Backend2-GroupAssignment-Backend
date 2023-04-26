@@ -15,7 +15,6 @@ router.patch('/posts/:id/edit', PostController.update);
 
 //To Rework
 router.post('/posts/comments/:id/create', commentController.create);
-router.get('/comments', commentController.all);
 router.get("/posts/comments/:id", commentController.postComments);
 router.patch("/posts/comments/:id/edit", commentController.update);
 router.delete("/posts/comments/:id/delete", commentController.delete
