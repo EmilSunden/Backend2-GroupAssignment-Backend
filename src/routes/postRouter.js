@@ -13,10 +13,10 @@ router.patch('/posts/:id/edit', PostController.update);
 
 
 //To Rework
-router.post('/post/comments/create', commentController.create);
-router.get("/post/comments/:id", commentController.postComments);
-router.patch("/post/comments/:id/edit", commentController.update);
-router.delete("/post/comments/:id/delete", commentController.delete
+router.post('/posts/comments/:id/create', commentController.create);
+router.get("/posts/comments/:id", commentController.postComments);
+router.patch("/posts/comments/:id/edit", commentController.update);
+router.delete("/posts/comments/:id/delete", commentController.delete
 );
 
 
