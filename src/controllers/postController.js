@@ -49,10 +49,10 @@ module.exports.getAllUsersPosts = async (req, res) => {
   }
 };
 
-module.exports.getUserPosts = async (req, res) => {
+module.exports.getProfilePosts = async (req, res) => {
   try {
     const { username } = req.params;
-    const user = await User.find({ username });
+    const user = await User.findOne({ username });
 
     if (user) {
       const posts = await Post.find({ user }).populate({
@@ -75,10 +75,9 @@ module.exports.getUserPosts = async (req, res) => {
 
 module.exports.getFollowingPosts = async (req, res) => {
     try {
-      const { username } = req.params;
-  
-      // Find the user based on their username
-      const user = await User.findOne({ username });
+      const { id } = req.params;
+      // Find the user based on their id
+      const user = await User.findOne( {_id: id} );
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
