@@ -2,8 +2,10 @@ const Joi = require('joi');
 const commentSchema = require('../model/Comment');
 const {isMongoId} = require("validator");
 const {commentBodyValidation} = require('../validation/validationSchemas')
+
 module.exports.create = async (req, res) => {
-    const {text, postId} = req.body;
+    const postId = req.params.id;
+    const {text} = req.body;
     const data = {
         text,
         user: req.user.id,
