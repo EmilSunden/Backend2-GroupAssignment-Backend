@@ -57,7 +57,7 @@ module.exports.getProfilePosts = async (req, res) => {
     if (user) {
       const posts = await Post.find({ user }).populate({
         path: "user",
-        select: "username",
+        select: ["username", "following"],
       });
 
       if (posts) {
