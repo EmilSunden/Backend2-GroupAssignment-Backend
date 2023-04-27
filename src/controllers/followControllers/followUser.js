@@ -4,6 +4,11 @@ async function followUser(req, res) {
   const followerId = req.user.id;
   const { id } = req.params;
 
+  if (followerId === id) {
+    console.log("You can't follow yourself!")
+    return res.status(400).json({ message: "You can't follow yourself!" })
+  }
+
   try {
     const { following } = await User.findById(followerId)
       .populate("following")
